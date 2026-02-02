@@ -3,9 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hey Bestie 💖</title>
+<title>Best Friend Forever 💞</title>
 
 <style>
+* { box-sizing: border-box; }
+
 body {
     margin: 0;
     height: 100vh;
@@ -14,198 +16,257 @@ body {
     color: white;
 }
 
-/* Video background */
+/* Video Background */
 video {
     position: fixed;
     inset: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    z-index: -1;
-    filter: brightness(0.7);
+    z-index: -2;
+    filter: brightness(0.6);
 }
 
+/* Overlay gradient */
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,105,180,0.4), rgba(138,43,226,0.4));
+    z-index: -1;
+}
+
+/* Screens */
 .screen {
     display: none;
     height: 100vh;
     justify-content: center;
     align-items: center;
     text-align: center;
-    flex-direction: column;
     padding: 20px;
 }
 
-.active {
-    display: flex;
-}
+.active { display: flex; }
 
+/* Glass Card */
 .card {
-    background: rgba(255,255,255,0.9);
-    color: #333;
-    padding: 25px;
-    border-radius: 20px;
-    max-width: 360px;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(15px);
+    padding: 30px 25px;
+    border-radius: 25px;
+    max-width: 380px;
     width: 100%;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
 }
 
 h1 {
-    color: #ff4d88;
+    color: #ffb6ff;
+    margin-bottom: 10px;
 }
 
+p {
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+/* Buttons */
 button {
-    padding: 12px 25px;
+    padding: 12px 28px;
     margin: 10px;
     font-size: 16px;
     border: none;
     border-radius: 30px;
     cursor: pointer;
+    transition: 0.3s;
 }
 
 .yes {
-    background: #ff4d88;
+    background: linear-gradient(135deg, #ff4d6d, #ff85f7);
     color: white;
+    box-shadow: 0 10px 20px rgba(255,77,109,0.5);
 }
 
+.yes:hover { transform: scale(1.1); }
+
 .no {
-    background: #ccc;
+    background: #eee;
+    color: #333;
     position: relative;
 }
 
 /* Tic Tac Toe */
 .board {
     display: grid;
-    grid-template-columns: repeat(3, 80px);
-    gap: 10px;
+    grid-template-columns: repeat(3, 90px);
+    gap: 12px;
     justify-content: center;
+    margin-top: 15px;
 }
 
 .cell {
-    width: 80px;
-    height: 80px;
-    background: white;
+    width: 90px;
+    height: 90px;
+    background: rgba(255,255,255,0.85);
     color: #ff4d88;
     font-size: 36px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    border-radius: 15px;
+    border-radius: 18px;
 }
 
-.final img {
-    width: 220px;
-    border-radius: 20px;
+#gameMsg {
     margin-top: 15px;
+    font-weight: bold;
+}
+
+/* Final Image */
+.final img {
+    width: 240px;
+    border-radius: 22px;
+    margin-top: 15px;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.4);
 }
 </style>
 </head>
 
 <body>
 
-<!-- Free romantic background video -->
 <video autoplay muted loop>
-    <source src="https://cdn.coverr.co/videos/coverr-romantic-sunset-5625/1080p.mp4" type="video/mp4">
+  <source src="https://cdn.coverr.co/videos/coverr-romantic-sunset-5625/1080p.mp4" type="video/mp4">
 </video>
+<div class="overlay"></div>
 
 <!-- Screen 1 -->
 <div class="screen active" id="screen1">
-    <div class="card">
-        <h1>Hey 💕</h1>
-        <p>Will you be my Best Friend Forever? 🌸</p>
-        <button class="yes" onclick="goTo(2)">Yes 🙂‍↕️</button>
-        <button class="no" id="noBtn">No 🙃</button>
-    </div>
+  <div class="card">
+    <h1>Hey 💕</h1>
+    <p>Will you be my Best Friend Forever? 🌸</p>
+    <button class="yes" onclick="goTo(2)">Yes 🙂‍↕️</button>
+    <button class="no" id="noBtn">No 🙃</button>
+  </div>
 </div>
 
 <!-- Screen 2 -->
 <div class="screen" id="screen2">
-    <div class="card">
-        <h1>Hmm 😏</h1>
-        <p>Do you really like me as your bestie?</p>
-        <button class="yes" onclick="goTo(3)">Obviously YES 💖</button>
-    </div>
+  <div class="card">
+    <h1>Really? 😏</h1>
+    <p>Then prove it by winning this game 🎮</p>
+    <button class="yes" onclick="goTo(3)">Let’s Play 💖</button>
+  </div>
 </div>
 
-<!-- Screen 3 : Game -->
+<!-- Screen 3 -->
 <div class="screen" id="screen3">
-    <div class="card">
-        <h1>Win this game 🎮</h1>
-        <p>Beat me in Tic-Tac-Toe 😉</p>
-        <div class="board" id="board"></div>
-        <p id="gameMsg"></p>
-    </div>
+  <div class="card">
+    <h1>Tic Tac Toe ✨</h1>
+    <div class="board" id="board"></div>
+    <p id="gameMsg"></p>
+    <button class="yes" id="playAgainBtn" style="display:none;" onclick="resetGame()">Play Again 🔁</button>
+  </div>
 </div>
 
 <!-- Final Screen -->
 <div class="screen final" id="screen4">
-    <div class="card">
-        <h1>Best Friends Forever 💞</h1>
-        <p>You won my heart & friendship 🫶</p>
-        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2" alt="anime vibe">
-        <p>Always smiling because of you 🌸</p>
-    </div>
+  <div class="card">
+    <h1>Best Friends Forever 💞</h1>
+    <p>You’re special & always will be 🌷</p>
+    <img src="https://images.unsplash.com/photo-1607746882042-944635dfe10e" alt="anime couple">
+    <p>Promise to stay smiling together 😊</p>
+  </div>
 </div>
 
 <script>
-/* NO button roaming nearby */
+/* NO button roam */
 const noBtn = document.getElementById("noBtn");
-noBtn.addEventListener("mouseover", () => moveNo(60));
-noBtn.addEventListener("touchstart", () => moveNo(60));
+noBtn.addEventListener("mouseover",()=>moveNo(70));
+noBtn.addEventListener("touchstart",()=>moveNo(70));
 
-function moveNo(range) {
-    const x = (Math.random() * range) - range/2;
-    const y = (Math.random() * range) - range/2;
-    noBtn.style.transform = `translate(${x}px, ${y}px)`;
+function moveNo(r){
+  const x=(Math.random()*r)-(r/2);
+  const y=(Math.random()*r)-(r/2);
+  noBtn.style.transform=`translate(${x}px,${y}px)`;
 }
 
 /* Navigation */
-function goTo(n) {
-    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-    document.getElementById('screen' + n).classList.add('active');
+function goTo(n){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('screen'+n).classList.add('active');
 }
 
-/* Tic Tac Toe */
-const board = document.getElementById("board");
-let cells = Array(9).fill(null);
-let gameOver = false;
+/* Game Logic */
+const board=document.getElementById("board");
+const msg=document.getElementById("gameMsg");
+const playAgainBtn=document.getElementById("playAgainBtn");
+let cells, gameOver;
 
-cells.forEach((_, i) => {
-    const cell = document.createElement("div");
-    cell.className = "cell";
-    cell.onclick = () => play(i, cell);
-    board.appendChild(cell);
-});
+function initGame(){
+  board.innerHTML="";
+  cells=Array(9).fill(null);
+  gameOver=false;
+  msg.textContent="";
+  playAgainBtn.style.display="none";
 
-function play(i, cell) {
-    if (cells[i] || gameOver) return;
-    cell.textContent = "X";
-    cells[i] = "X";
+  cells.forEach((_,i)=>{
+    const c=document.createElement("div");
+    c.className="cell";
+    c.onclick=()=>play(i,c);
+    board.appendChild(c);
+  });
+}
+initGame();
 
-    if (checkWin("X")) {
-        document.getElementById("gameMsg").textContent = "You win 😍";
-        gameOver = true;
-        setTimeout(() => goTo(4), 1200);
-        return;
-    }
+function play(i,cell){
+  if(cells[i]||gameOver)return;
+  cell.textContent="X";
+  cells[i]="X";
 
-    aiMove();
+  if(check("X")){
+    msg.textContent="You win 😍";
+    gameOver=true;
+    setTimeout(()=>goTo(4),1200);
+    return;
+  }
+
+  if(cells.every(c=>c)){
+    draw();
+    return;
+  }
+
+  aiMove();
 }
 
-function aiMove() {
-    let empty = cells.map((v,i)=>v?null:i).filter(v=>v!==null);
-    if (!empty.length) return;
-    let move = empty[Math.floor(Math.random()*empty.length)];
-    cells[move] = "O";
-    board.children[move].textContent = "O";
+function aiMove(){
+  let empty=cells.map((v,i)=>v?null:i).filter(v=>v!==null);
+  let m=empty[Math.floor(Math.random()*empty.length)];
+  cells[m]="O";
+  board.children[m].textContent="O";
+
+  if(check("O")){
+    msg.textContent="I won 😜 Try again!";
+    endGame();
+  } else if(cells.every(c=>c)){
+    draw();
+  }
 }
 
-function checkWin(p) {
-    const wins = [
-        [0,1,2],[3,4,5],[6,7,8],
-        [0,3,6],[1,4,7],[2,5,8],
-        [0,4,8],[2,4,6]
-    ];
-    return wins.some(w => w.every(i => cells[i] === p));
+function draw(){
+  msg.textContent="It’s a draw 😄";
+  endGame();
+}
+
+function endGame(){
+  gameOver=true;
+  playAgainBtn.style.display="inline-block";
+}
+
+function resetGame(){
+  initGame();
+}
+
+function check(p){
+  const w=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+  return w.some(a=>a.every(i=>cells[i]===p));
 }
 </script>
 
